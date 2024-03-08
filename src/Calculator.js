@@ -17,7 +17,7 @@ function Calculator({ workouts, allowSound }) {
 
 
   const CurrentDuration = (number * sets * speed) / 60 + (sets - 1) * durationBreak;
-  console.log(number, sets, speed, durationBreak, CurrentDuration, duration)
+  
   const mins = Math.floor(duration);
   const seconds = (duration - mins) * 60;
 
