@@ -7,7 +7,6 @@ function Calculator({ workouts, allowSound }) {
   const [sets, setSets] = useState(3);
   const [speed, setSpeed] = useState(90);
   const [durationBreak, setDurationBreak] = useState(5);
-
   const [duration, setDuration] = useState(0);
 
   // const playSound = useCallback (function () {
@@ -16,11 +15,17 @@ function Calculator({ workouts, allowSound }) {
   //   sound.play();
   // }, [allowSound])
 
+
+  const CurrentDuration = (number * sets * speed) / 60 + (sets - 1) * durationBreak;
+  console.log(number, sets, speed, durationBreak, CurrentDuration, duration)
+  const mins = Math.floor(duration);
+  const seconds = (duration - mins) * 60;
+
   useEffect(
     function () {
-      setDuration((number * sets * speed) / 60 + (sets - 1) * durationBreak);
+      setDuration(CurrentDuration);
     },
-    [number, sets, speed, durationBreak]
+    [CurrentDuration]
   );
 
   useEffect(
@@ -35,9 +40,6 @@ function Calculator({ workouts, allowSound }) {
     [duration, allowSound]
   );
 
-  // const duration = (number * sets * speed) / 60 + (sets - 1) * durationBreak;
-  const mins = Math.floor(duration);
-  const seconds = (duration - mins) * 60;
 
   function handlePlus() {
     setDuration((duration) => Math.floor(duration) + 1);
@@ -67,7 +69,7 @@ function Calculator({ workouts, allowSound }) {
             min="1"
             max="5"
             value={sets}
-            onChange={(e) => setSets(e.target.value)}
+            onChange={(e) => setSets(+e.target.value)}
           />
           <span>{sets}</span>
         </div>
@@ -79,7 +81,7 @@ function Calculator({ workouts, allowSound }) {
             max="180"
             step="30"
             value={speed}
-            onChange={(e) => setSpeed(e.target.value)}
+            onChange={(e) => setSpeed(+e.target.value)}
           />
           <span>{speed} sec/exercise</span>
         </div>
@@ -90,7 +92,7 @@ function Calculator({ workouts, allowSound }) {
             min="1"
             max="10"
             value={durationBreak}
-            onChange={(e) => setDurationBreak(e.target.value)}
+            onChange={(e) => setDurationBreak(+e.target.value)}
           />
           <span>{durationBreak} minutes/break</span>
         </div>
